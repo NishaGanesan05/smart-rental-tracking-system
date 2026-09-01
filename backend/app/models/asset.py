@@ -20,3 +20,7 @@ class Asset(Base):
     )
 
     site = relationship("Site", back_populates="assets")
+    rentals = relationship("Rental", back_populates="asset")
+    telemetry = relationship("Telemetry",back_populates="asset")
+    alerts = relationship("Alert",back_populates="asset")
+    recommendations = relationship("Recommendation",back_populates="asset")

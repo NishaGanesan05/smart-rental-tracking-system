@@ -1,10 +1,15 @@
 from fastapi import FastAPI
 from sqlalchemy import text
 
-from app.database import Base, engine
-from app.models import Asset, Operator, Site
+from app.database import engine
+from app.routes.rentals import router as rental_router
+from app.routes.assets import router as asset_router
+from app.routes.kpis import router as kpi_router
+from app.routes.telemetry import router as telemetry_router
+from app.routes.alerts import router as alert_router
+from app.routes.recommendations import router as recommendation_router
+from app.routes.ml_anomalies import router as ml_anomaly_router
 
-Base.metadata.create_all(bind=engine)
 
 
 app = FastAPI(
@@ -12,6 +17,16 @@ app = FastAPI(
     description="AI-powered rental asset control tower",
     version="1.0.0"
 )
+
+
+app.include_router(rental_router)
+app.include_router(asset_router)
+app.include_router(kpi_router)
+app.include_router(telemetry_router)
+app.include_router(alert_router)
+app.include_router(recommendation_router)
+app.include_router(ml_anomaly_router)
+
 
 
 @app.get("/")
