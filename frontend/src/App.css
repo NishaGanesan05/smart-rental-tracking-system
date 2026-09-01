@@ -1,0 +1,452 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family:
+    Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #f5f7fa;
+  color: #17202a;
+}
+
+button,
+a {
+  font: inherit;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+}
+
+/* Sidebar */
+
+.sidebar {
+  width: 250px;
+  min-height: 100vh;
+  background: #111827;
+  color: white;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 8px 32px;
+}
+
+.brand-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: #2563eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 14px;
+}
+
+.brand h2 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.brand span {
+  color: #9ca3af;
+  font-size: 11px;
+}
+
+.navigation {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 8px;
+  color: #9ca3af;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.nav-item span {
+  width: 20px;
+  text-align: center;
+}
+
+.nav-item:hover,
+.nav-item.active {
+  background: #1f2937;
+  color: white;
+}
+
+.nav-item.active {
+  border-left: 3px solid #3b82f6;
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  padding: 16px 8px 4px;
+  color: #9ca3af;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  background: #22c55e;
+  border-radius: 50%;
+}
+
+/* Main content */
+
+.main-content {
+  flex: 1;
+  padding: 32px;
+  max-width: 1600px;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+.eyebrow {
+  margin: 0 0 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #6b7280;
+}
+
+.topbar h1 {
+  margin: 0;
+  font-size: 28px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #dbeafe;
+  color: #1d4ed8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.user-info strong,
+.user-info span {
+  display: block;
+}
+
+.user-info strong {
+  font-size: 13px;
+}
+
+.user-info span {
+  color: #6b7280;
+  font-size: 11px;
+  margin-top: 2px;
+}
+
+/* KPI cards */
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.kpi-card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.kpi-label {
+  display: block;
+  color: #6b7280;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.kpi-value {
+  display: block;
+  margin-top: 8px;
+  font-size: 30px;
+}
+
+.kpi-description {
+  display: block;
+  margin-top: 4px;
+  color: #9ca3af;
+  font-size: 11px;
+}
+
+.alert-value {
+  color: #dc2626;
+}
+
+/* Panels */
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 16px;
+}
+
+.panel {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 18px;
+}
+
+.panel-header h2 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.panel-header p {
+  margin: 5px 0 0;
+  color: #9ca3af;
+  font-size: 11px;
+}
+
+.view-button {
+  border: 0;
+  background: transparent;
+  color: #2563eb;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+/* Assets */
+
+.asset-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.asset-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 0;
+  border-top: 1px solid #f0f1f3;
+}
+
+.asset-row strong,
+.asset-row span {
+  display: block;
+}
+
+.asset-row strong {
+  font-size: 13px;
+}
+
+.asset-row div span {
+  color: #9ca3af;
+  font-size: 11px;
+  margin-top: 3px;
+}
+
+.status {
+  font-size: 9px;
+  font-weight: 700;
+  padding: 5px 8px;
+  border-radius: 5px;
+}
+
+.active-status {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.warning-status {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+/* Alerts */
+
+.alert-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.alert-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 0;
+  border-top: 1px solid #f0f1f3;
+}
+
+.alert-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 12px;
+}
+
+.alert-icon.critical {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.alert-icon.warning {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.alert-item strong,
+.alert-item span {
+  display: block;
+}
+
+.alert-item strong {
+  font-size: 13px;
+}
+
+.alert-item span {
+  color: #9ca3af;
+  font-size: 11px;
+  margin-top: 3px;
+}
+
+/* Recommendation */
+
+.recommendation-panel {
+  margin-top: 16px;
+  padding: 22px;
+  background: white;
+  border: 1px solid #dbeafe;
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+}
+
+.recommendation-label {
+  color: #2563eb;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.recommendation-panel h2 {
+  margin: 6px 0;
+  font-size: 17px;
+}
+
+.recommendation-panel p {
+  margin: 0;
+  max-width: 700px;
+  color: #6b7280;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.recommendation-button {
+  border: 0;
+  border-radius: 7px;
+  background: #2563eb;
+  color: white;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.recommendation-button:hover {
+  background: #1d4ed8;
+}
+
+/* Responsive */
+
+@media (max-width: 1000px) {
+  .kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .sidebar {
+    width: 70px;
+  }
+
+  .brand h2,
+  .brand span,
+  .nav-item:not(.active)::after,
+  .nav-item {
+    font-size: 0;
+  }
+
+  .brand {
+    justify-content: center;
+  }
+
+  .navigation {
+    align-items: center;
+  }
+
+  .nav-item {
+    width: 42px;
+    justify-content: center;
+  }
+
+  .main-content {
+    padding: 20px;
+  }
+
+  .kpi-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .recommendation-panel {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
