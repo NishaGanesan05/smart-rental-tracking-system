@@ -1,136 +1,145 @@
-import { useState } from 'react'
-import { assets } from '../data/assets'
+import { Link } from 'react-router-dom'
+import AssetTable from '../components/AssetTable'
 
 function Assets() {
-  const [search, setSearch] = useState('')
-  const [statusFilter, setStatusFilter] = useState('ALL')
-
-  const filteredAssets = assets.filter((asset) => {
-    const matchesSearch =
-      asset.id.toLowerCase().includes(search.toLowerCase()) ||
-      asset.type.toLowerCase().includes(search.toLowerCase()) ||
-      asset.site.toLowerCase().includes(search.toLowerCase())
-
-    const matchesStatus =
-      statusFilter === 'ALL' ||
-      asset.status === statusFilter
-
-    return matchesSearch && matchesStatus
-  })
-
   return (
-    <div className="page">
+    <div className="app">
 
-      <div className="page-header">
-        <div>
-          <p className="eyebrow">FLEET MANAGEMENT</p>
+      {/* Sidebar */}
+      <aside className="sidebar">
 
-          <h1>Assets</h1>
-
-          <p>
-            Monitor and manage all rental equipment.
-          </p>
-        </div>
-
-        <button className="primary-button">
-          + Add Asset
-        </button>
-      </div>
-
-
-      <div className="asset-controls">
-
-        <input
-          type="text"
-          placeholder="Search assets..."
-          value={search}
-          onChange={(event) => setSearch(event.target.value)}
-        />
-
-        <select
-          value={statusFilter}
-          onChange={(event) =>
-            setStatusFilter(event.target.value)
-          }
-        >
-          <option value="ALL">All statuses</option>
-          <option value="ACTIVE">Active</option>
-          <option value="UNASSIGNED">Unassigned</option>
-        </select>
-
-      </div>
-
-
-      <div className="panel">
-
-        <div className="panel-header">
+        <div className="brand">
+          <div className="brand-icon">
+            SR
+          </div>
 
           <div>
-            <h2>All Assets</h2>
+            <h2>Smart Rental</h2>
+            <span>Tracking System</span>
+          </div>
+        </div>
+
+        <nav className="navigation">
+
+          <Link className="nav-item" to="/">
+            <span>▦</span>
+            Dashboard
+          </Link>
+
+          <Link className="nav-item active" to="/assets">
+            <span>◈</span>
+            Assets
+          </Link>
+
+          <a
+            className="nav-item"
+            href="#"
+            onClick={(event) => event.preventDefault()}
+          >
+            <span>▣</span>
+            Rentals
+          </a>
+
+          <a
+            className="nav-item"
+            href="#"
+            onClick={(event) => event.preventDefault()}
+          >
+            <span>!</span>
+            Alerts
+          </a>
+
+          <a
+            className="nav-item"
+            href="#"
+            onClick={(event) => event.preventDefault()}
+          >
+            <span>✦</span>
+            Recommendations
+          </a>
+
+        </nav>
+
+        <div className="sidebar-footer">
+          <span className="status-dot"></span>
+          System Operational
+        </div>
+
+      </aside>
+
+
+      {/* Main Content */}
+      <main className="main-content">
+
+        {/* Header */}
+        <header className="topbar">
+
+          <div>
+            <p className="eyebrow">
+              FLEET MANAGEMENT
+            </p>
+
+            <h1>
+              Assets
+            </h1>
+          </div>
+
+          <div className="user-info">
+
+            <div className="user-avatar">
+              AD
+            </div>
+
+            <div>
+              <strong>Admin</strong>
+              <span>Fleet Manager</span>
+            </div>
+
+          </div>
+
+        </header>
+
+
+        {/* Page Introduction */}
+        <section className="page-intro">
+
+          <div>
+            <h2>Asset Inventory</h2>
 
             <p>
-              {filteredAssets.length} assets found
+              Monitor and manage all tracked rental equipment.
             </p>
           </div>
 
-        </div>
+          <Link className="view-button" to="/">
+            Back to Dashboard
+          </Link>
+
+        </section>
 
 
-        <div className="asset-table">
+        {/* Assets Table */}
+        <section className="panel">
 
-          <div className="asset-table-header">
-            <span>Asset ID</span>
-            <span>Type</span>
-            <span>Site</span>
-            <span>Status</span>
+          <div className="panel-header">
+
+            <div>
+              <h2>
+                All Assets
+              </h2>
+
+              <p>
+                Current equipment status and assignment
+              </p>
+            </div>
+
           </div>
 
+          <AssetTable />
 
-          {filteredAssets.map((asset) => (
+        </section>
 
-            <div
-              className="asset-table-row"
-              key={asset.id}
-            >
-
-              <strong>
-                {asset.id}
-              </strong>
-
-              <span>
-                {asset.type}
-              </span>
-
-              <span>
-                {asset.site}
-              </span>
-
-              <span
-                className={`status ${
-                  asset.status === 'ACTIVE'
-                    ? 'active-status'
-                    : 'warning-status'
-                }`}
-              >
-                {asset.status}
-              </span>
-
-            </div>
-
-          ))}
-
-
-          {filteredAssets.length === 0 && (
-
-            <div className="empty-state">
-              No assets found.
-            </div>
-
-          )}
-
-        </div>
-
-      </div>
+      </main>
 
     </div>
   )
