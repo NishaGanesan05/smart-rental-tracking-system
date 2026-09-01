@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
-import Assets from './pages/Assets'
+
 import './App.css'
 
 import KPICard from './components/KPICard'
@@ -7,7 +7,10 @@ import AssetTable from './components/AssetTable'
 import AlertList from './components/AlertList'
 import RecommendationCard from './components/RecommendationCard'
 
-function App() {
+import Assets from './pages/Assets'
+
+
+function Dashboard() {
   return (
     <div className="app">
 
@@ -25,34 +28,58 @@ function App() {
           </div>
         </div>
 
+
         <nav className="navigation">
 
-          <a className="nav-item active" href="#">
+          <Link
+            className="nav-item active"
+            to="/"
+          >
             <span>▦</span>
             Dashboard
-          </a>
+          </Link>
 
-          <a className="nav-item" href="#">
+
+          <Link
+            className="nav-item"
+            to="/assets"
+          >
             <span>◈</span>
             Assets
-          </a>
+          </Link>
 
-          <a className="nav-item" href="#">
+
+          <a
+            className="nav-item"
+            href="#"
+            onClick={(event) => event.preventDefault()}
+          >
             <span>▣</span>
             Rentals
           </a>
 
-          <a className="nav-item" href="#">
+
+          <a
+            className="nav-item"
+            href="#"
+            onClick={(event) => event.preventDefault()}
+          >
             <span>!</span>
             Alerts
           </a>
 
-          <a className="nav-item" href="#">
+
+          <a
+            className="nav-item"
+            href="#"
+            onClick={(event) => event.preventDefault()}
+          >
             <span>✦</span>
             Recommendations
           </a>
 
         </nav>
+
 
         <div className="sidebar-footer">
           <span className="status-dot"></span>
@@ -60,6 +87,7 @@ function App() {
         </div>
 
       </aside>
+
 
 
       {/* Main Content */}
@@ -78,6 +106,7 @@ function App() {
             </h1>
           </div>
 
+
           <div className="user-info">
 
             <div className="user-avatar">
@@ -92,6 +121,7 @@ function App() {
           </div>
 
         </header>
+
 
 
         {/* KPI Section */}
@@ -124,6 +154,7 @@ function App() {
         </section>
 
 
+
         {/* Main Dashboard Panels */}
         <section className="dashboard-grid">
 
@@ -142,15 +173,19 @@ function App() {
                 </p>
               </div>
 
-              <button className="view-button">
+              <Link
+                className="view-button"
+                to="/assets"
+              >
                 View all
-              </button>
+              </Link>
 
             </div>
 
             <AssetTable />
 
           </div>
+
 
 
           {/* Alerts */}
@@ -181,6 +216,7 @@ function App() {
         </section>
 
 
+
         {/* AI Recommendation */}
         <RecommendationCard />
 
@@ -189,5 +225,30 @@ function App() {
     </div>
   )
 }
+
+
+
+function App() {
+  return (
+    <BrowserRouter>
+
+      <Routes>
+
+        <Route
+          path="/"
+          element={<Dashboard />}
+        />
+
+        <Route
+          path="/assets"
+          element={<Assets />}
+        />
+
+      </Routes>
+
+    </BrowserRouter>
+  )
+}
+
 
 export default App
