@@ -9,9 +9,9 @@ class Asset(Base):
 
     asset_id = Column(String(20), primary_key=True)
     asset_type = Column(String(50), nullable=False)
-    model = Column(String(100), nullable=True)
-    serial_number = Column(String(100), unique=True, nullable=True)
-    status = Column(String(30), nullable=False, default="AVAILABLE")
+    model = Column(String(50), nullable=True)
+    serial_number = Column(String(100), nullable=True)
+    status = Column(String(30), nullable=False)
 
     site_id = Column(
         String(20),

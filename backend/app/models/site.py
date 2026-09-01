@@ -9,10 +9,10 @@ class Site(Base):
 
     site_id = Column(String(20), primary_key=True)
     site_name = Column(String(100), nullable=False)
-    location = Column(String(150), nullable=False)
+    location = Column(String(100), nullable=True)
     latitude = Column(Float, nullable=True)
     longitude = Column(Float, nullable=True)
 
-assets = relationship("Asset", back_populates="site")
+    assets = relationship("Asset", back_populates="site")
 
-operators = relationship("Operator", back_populates="site")
+    operators = relationship("Operator", back_populates="site")
