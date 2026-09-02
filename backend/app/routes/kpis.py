@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
 from app.database import get_db
-from app.models import Asset, Rental
+from app.models import Asset, Rental, Telemetry, Alert
 from app.schemas.kpi import KPIResponse
 
 
@@ -52,6 +52,35 @@ def get_kpis(db: Session = Depends(get_db)):
         .filter(Rental.status == "RETURNED")
         .count()
     )
+    telemetry_records = db.query(Telemetry).all()
+
+    if telemetry_records:
+        total_runtime = sum(
+            record.runtime_hours or 0
+            for record in telemetry_records
+        )
+
+        total_idle = sum(
+            record.idle_hours or 0
+            for record in telemetry_records
+        )
+
+        total_operating_time = total_runtime + total_idle
+
+        if total_operating_time > 0:
+            fleet_utilization = (
+                total_runtime / total_operating_time
+            ) * 100
+        else:
+            fleet_utilization = 0.0
+    else:
+        fleet_utilization = 0.0
+
+    active_alerts = (
+        db.query(Alert)
+        .filter(Alert.status == "OPEN")
+        .count()
+    )
 
     return {
         "total_assets": total_assets,
@@ -61,4 +90,6 @@ def get_kpis(db: Session = Depends(get_db)):
         "active_rentals": active_rentals,
         "overdue_rentals": overdue_rentals,
         "returned_rentals": returned_rentals,
-    }
+        "fleet_utilization": round(fleet_utilization, 2),
+        "active_alerts": active_alerts
+        }

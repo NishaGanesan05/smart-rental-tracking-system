@@ -1,47 +1,41 @@
 import { Link } from 'react-router-dom'
 import { useEffect, useMemo, useState } from 'react'
 
-function Assets() {
-  const [assets, setAssets] = useState([])
+function Rentals() {
+  const [rentals, setRentals] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
-  const [selectedType, setSelectedType] = useState('ALL')
+  const [selectedStatus, setSelectedStatus] = useState('ALL')
 
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/assets/')
+    fetch('http://127.0.0.1:8000/rentals/')
       .then((response) => {
         if (!response.ok) {
-          throw new Error('Failed to fetch assets')
+          throw new Error('Failed to fetch rentals')
         }
 
         return response.json()
       })
       .then((data) => {
-        setAssets(data)
+        setRentals(data)
         setLoading(false)
       })
       .catch((error) => {
-        console.error('Error fetching assets:', error)
-        setError('Unable to load asset data.')
+        console.error('Error fetching rentals:', error)
+        setError('Unable to load rental data.')
         setLoading(false)
       })
   }, [])
 
-  const equipmentTypes = useMemo(() => {
-    const types = assets.map((asset) => asset.asset_type)
-
-    return [...new Set(types)].sort()
-  }, [assets])
-
-  const filteredAssets = useMemo(() => {
-    if (selectedType === 'ALL') {
-      return assets
+  const filteredRentals = useMemo(() => {
+    if (selectedStatus === 'ALL') {
+      return rentals
     }
 
-    return assets.filter(
-      (asset) => asset.asset_type === selectedType
+    return rentals.filter(
+      (rental) => rental.status === selectedStatus
     )
-  }, [assets, selectedType])
+  }, [rentals, selectedStatus])
 
   return (
     <div className="app">
@@ -73,7 +67,7 @@ function Assets() {
           </Link>
 
           <Link
-            className="nav-item active"
+            className="nav-item"
             to="/assets"
           >
             <span>◈</span>
@@ -81,7 +75,7 @@ function Assets() {
           </Link>
 
           <Link
-            className="nav-item"
+            className="nav-item active"
             to="/rentals"
           >
             <span>▣</span>
@@ -134,7 +128,7 @@ function Assets() {
             </p>
 
             <h1>
-              Assets
+              Rentals
             </h1>
 
           </div>
@@ -160,11 +154,11 @@ function Assets() {
           <div>
 
             <h2>
-              Asset Management
+              Rental Management
             </h2>
 
             <p>
-              Monitor equipment, operational status, and fleet allocation.
+              Monitor active, overdue, and returned equipment rentals.
             </p>
 
           </div>
@@ -178,7 +172,7 @@ function Assets() {
 
         </section>
 
-        {/* Asset Table */}
+        {/* Rental Table */}
         <section className="panel">
 
           <div className="panel-header">
@@ -186,43 +180,46 @@ function Assets() {
             <div>
 
               <h2>
-                Equipment Fleet
+                Rental Contracts
               </h2>
 
               <p>
-                View and filter all tracked equipment.
+                View and filter equipment rental activity.
               </p>
 
             </div>
 
-            {/* Equipment Type Filter */}
+            {/* Rental Status Filter */}
             <div className="filter-group">
 
-              <label htmlFor="equipment-type">
-                Equipment Type
+              <label htmlFor="rental-status">
+                Rental Status
               </label>
 
               <select
-                id="equipment-type"
-                value={selectedType}
+                id="rental-status"
+                value={selectedStatus}
                 onChange={(event) =>
-                  setSelectedType(event.target.value)
+                  setSelectedStatus(event.target.value)
                 }
                 className="filter-select"
               >
 
                 <option value="ALL">
-                  All Equipment
+                  All Rentals
                 </option>
 
-                {equipmentTypes.map((type) => (
-                  <option
-                    key={type}
-                    value={type}
-                  >
-                    {type}
-                  </option>
-                ))}
+                <option value="ACTIVE">
+                  Active
+                </option>
+
+                <option value="OVERDUE">
+                  Overdue
+                </option>
+
+                <option value="RETURNED">
+                  Returned
+                </option>
 
               </select>
 
@@ -230,10 +227,17 @@ function Assets() {
 
           </div>
 
+          {/* Result Count */}
+          {!loading && !error && (
+            <div className="filter-result-count">
+              Showing {filteredRentals.length} of {rentals.length} rentals
+            </div>
+          )}
+
           {/* Loading */}
           {loading && (
             <p>
-              Loading assets...
+              Loading rentals...
             </p>
           )}
 
@@ -247,55 +251,58 @@ function Assets() {
           {/* Empty */}
           {!loading &&
             !error &&
-            filteredAssets.length === 0 && (
+            filteredRentals.length === 0 && (
               <p>
-                No equipment found for the selected type.
+                No rentals found for the selected status.
               </p>
             )}
 
-          {/* Assets */}
+          {/* Rentals */}
           {!loading &&
             !error &&
-            filteredAssets.length > 0 && (
+            filteredRentals.length > 0 && (
 
               <div className="asset-list">
 
-                {filteredAssets.map((asset) => (
+                {filteredRentals.map((rental) => (
 
                   <div
                     className="asset-row"
-                    key={asset.asset_id}
+                    key={rental.rental_id}
                   >
 
                     <div>
 
                       <strong>
-                        {asset.asset_id}
+                        {rental.rental_id}
                       </strong>
 
                       <span>
-                        {asset.asset_type} · {asset.model}
+                        {rental.asset_id} · Customer {rental.customer_id}
                       </span>
 
                       <span>
-                        Serial Number: {asset.serial_number}
+                        {rental.start_date} → {rental.expected_return_date}
                       </span>
 
-                      <span>
-                        Site: {asset.site_id}
-                      </span>
+                      {rental.actual_return_date && (
+                        <span>
+                          Actual Return: {rental.actual_return_date}
+                        </span>
+                      )}
 
                     </div>
 
                     <span
                       className={`status ${
-                        asset.status === 'ACTIVE' ||
-                        asset.status === 'AVAILABLE'
+                        rental.status === 'ACTIVE'
                           ? 'active-status'
-                          : 'warning-status'
+                          : rental.status === 'RETURNED'
+                            ? 'returned-status'
+                            : 'danger-status'
                       }`}
                     >
-                      {asset.status}
+                      {rental.status}
                     </span>
 
                   </div>
@@ -314,4 +321,4 @@ function Assets() {
   )
 }
 
-export default Assets
+export default Rentals

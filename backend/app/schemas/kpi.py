@@ -9,3 +9,5 @@ class KPIResponse(BaseModel):
     active_rentals: int
     overdue_rentals: int
     returned_rentals: int
+    fleet_utilization: float
+    active_alerts: int
